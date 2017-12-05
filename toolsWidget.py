@@ -38,13 +38,6 @@ class ToolsWidget(tkinter.Listbox):
 	def focusOut(self, event):
 		self.popup_menu.unpost()
 
-    #def delete_selected(self):
-    #    for i in self.curselection()[::-1]:
-    #        self.delete(i)
-
-	#def select_all(self):
-	#	self.selection_set(0, 'end')
-
 	def pos_taggerSimple(self):
 		if not self.nlpprocesses['tagging']:return
 		sent_id = self.curselection()[0]
@@ -121,14 +114,8 @@ class ToolsWidget(tkinter.Listbox):
 		root.bind("<Configure>", lambda event, canvas=canvas: scrollForAll(canvas))
 
 	def onto_extractor(self):
-		#if not self.nlpprocesses['ontorels']:return
+		if not self.nlpprocesses['ontorels']:return
 		selection_id = self.curselection()
-		#if not selection_id: return
-		#content = ["tiger\tcat\t0.8\t0.8\tpositive", "car\tvehicle\t0.8\t0.8\tnegative", "tiger\tplant\t0.8\t0.8\tpositive"]
-		content = ["frazil\tice type\t0.5\t0.8\tpositive", 
-					"frazil\tgrease ice\t0.7\t0.8\tpositive", 
-					"frazil ice\ttiny ice platelets\t0.55\t0.7\tpositive",
-					"nilas\tice\t0.9\t0.6\tpositive"
-					]
+		if not selection_id: return
 		ontoFrame = OntoWidget()
 		ontoFrame.contentReader(content)
