@@ -40,7 +40,7 @@ def BFSPlot(data, adjMatrix, root):
         adjList = np.nonzero(adjMatrix[node])[0]
         for child in adjList:
             form = data[child].form
-            cNode = pydot.Node(str(child), label='"%s"'%form, shape='plaintext')
+            cNode = pydot.Node(str(child), label='"%s"'%form if form != '"' else '"', shape='plaintext')
             graph.add_node(cNode)
             if data[child].drel == "root":
                 edge = pydot.Edge(pNode, cNode, fontsize="8.0", fontcolor='blue')
