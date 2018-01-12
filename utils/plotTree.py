@@ -6,7 +6,6 @@ import pydot
 import codecs
 import requests
 import numpy as np
-from bs4 import BeautifulSoup
 
 from collections import namedtuple as nt, defaultdict as dfd
 
