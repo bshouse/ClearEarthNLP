@@ -22,6 +22,9 @@ pip3 install -U nltk
 # install graphviz
 pip3 install graphviz
 
+# install networkx
+pip3 install networkx
+
 # install pydot
 pip3 install pydot3
 
