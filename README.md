@@ -1,8 +1,9 @@
-ClearNLP is an easy to use toolkit for text processing in Earth Science domains such as Cryosphere, Ecology and Earthquake. It contains implementations for part-of-speech tagging, named entity recognition, dependency parsing and subsumption learning. All the models are trained using deep neural networks and give state-of-the-art performance.
+ClearEarthNLP is an easy to use toolkit for text processing in Earth Science domains such as Cryosphere, Ecology and Earthquake. It contains implementations for part-of-speech tagging, named entity recognition, dependency parsing and subsumption learning. All the models are trained using deep neural networks and give state-of-the-art performance.
 
 
-__Manual Installation__
+# Installation
 
+## Linux
 The following is a list of all the commands needed to perform a manual install:
 ```
 # Installing Python3 ClearNLP:
@@ -38,9 +39,25 @@ apt-get install python3-tk
 pip3 install dynet==2.0
 ```
 
+## Mac
 
-__Run__
-```
-bash clearnlp.sh
-```
+Install [Python 3](https://www.python.org/downloads/mac-osx/).
+
+Install pip:
+
+    curl https://bootstrap.pypa.io/get-pip.py | python3
+   
+Install Python packages:
+
+    pip3 install gensim git+git://github.com/irshadbhat/indic-tokenizer.git nltk graphviz pydot pillow dynet
+    
+Download NLTK corpora:
+
+    python3 -m nltk.downloader stopwords wordnet
+
+Download and unzip ClearEarthNLP.
+
+# Run
+
+    bash clearnlp.sh
 
