@@ -22,6 +22,7 @@ from widgets.toolsWidget import ToolsWidget
 
 from tools.tagger import *
 from tools.parser import *
+from tools import parser
 from utils.keyPhraseExtraction import *
 from tools.subsumptionExtractor import *
 
@@ -37,12 +38,12 @@ def runApplication():
     if (not selectedTask.strip()) or (not lboxContent):return
     if selectedTask == "parsing":
         if lbox.nlpprocesses['parsing']:return
-        parser = Parser(model='/home/riyaz/Projects/clear-nlp/dev/models/parser/clearnlp-parser')#, test=True)
+        nlp_parser = Parser(model='models/parser/clearnlp-parser')#, test=True)
         for sid, sentence in enumerate(lboxContent):
             if not sentence.strip():continue
             #houtput = nlpTools.run_parser(sentence.strip())
             #poutput = houtput.split("\n")[2:-2]
-            graph, ppos, Roott = Test(parser, sentence.strip().split())
+            graph, ppos, Roott = parser.Test(nlp_parser, sentence.strip().split())
             for node in xrange(len(graph)):
                 graph[node] = graph[node]._replace(tag=ppos[node],
                                                     parent=graph[node].pparent,
@@ -55,7 +56,7 @@ def runApplication():
             img_file = tempfile.NamedTemporaryFile(mode="wb", suffix=".png", delete=False)
             graph.write_png(img_file.name)
             lbox.nlpprocesses['parsing'][sid] = [img_file.name, nodes[1:-1]]
-        del parser
+        del nlp_parser
         lbox.nlpprocesses['stash'] = True
     elif selectedTask == "tagging":
         if lbox.nlpprocesses['tagging']:return
@@ -64,7 +65,7 @@ def runApplication():
                 tags = [(node.form, node.tag) for node in lbox.nlpprocesses['parsing'][sent_id][1]]
                 lbox.nlpprocesses['tagging'][sent_id] = tags
         else:
-            tagger = Tagger(model='/home/riyaz/Projects/clear-nlp/dev/models/tagger/clearnlp-tagger')
+            tagger = Tagger(model='models/tagger/clearnlp-tagger')
             for sid, sentence in enumerate(lboxContent):
                 if not sentence.strip():continue
                 tags =  tagger.tag_sent(sentence.split())
@@ -73,7 +74,7 @@ def runApplication():
         lbox.nlpprocesses['stash'] = True
     elif selectedTask == "nentity":
         if lbox.nlpprocesses['nentity']:return
-        tagger = Tagger(model='/home/riyaz/Projects/clear-nlp/dev/models/ner/clearnlp-ner')
+        tagger = Tagger(model='models/ner/clearnlp-ner')
         for sid, sentence in enumerate(lboxContent):
             if not sentence.strip():continue
             tags =  tagger.tag_sent(sentence.split())
@@ -82,7 +83,7 @@ def runApplication():
         lbox.nlpprocesses['stash'] = True
     elif selectedTask == "ontorels":
         if lbox.nlpprocesses['ontorels']:return
-        ontoextractor = SubsumptionLearning(model='/home/riyaz/Projects/clear-nlp/dev/models/onto/clearnlp-onto')
+        ontoextractor = SubsumptionLearning(model='models/onto/clearnlp-onto')
         pairs = list(generatePairs(lboxContent))
         subsumptionRelations = list()
         for oid, (firstword, secondword) in enumerate(pairs,1):
