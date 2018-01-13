@@ -114,7 +114,10 @@ class OntoWidget(object):
                 self.tree.tag_configure('%s'%(idx), foreground="black", font=self.itemfont)
     
         if self.tree.get_children():
-            self.tree.selection_set('"0"')
+            if sys.platform.startswith("linux"):
+                self.tree.selection_set('"0"')
+            else:
+                self.tree.selection_set("0")
             #tree.focus_set()
             firstItem = "\t".join(self.tree.item('0')['values'])
             self.system_outputs.set(self.content[firstItem][-1].split("#")[0])
