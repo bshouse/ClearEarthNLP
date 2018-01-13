@@ -55,7 +55,7 @@ Download and unzip ClearEarthNLP.
 
 From inside the ClearEarthNLP directory, run:
 
-    ./clearnlp.sh
+    ./clearEarthNLP.sh
 
 The model files will automatically download and unzip into the "models/" directory the first time ClearEarthNLP is run. Expect this to take several minutes.
 
