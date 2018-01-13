@@ -14,7 +14,7 @@ do
         if [[ $platform == "Linux" ]];
         then
             wget -O "models/$model.zip" "http://verbs.colorado.edu/~ribh9977/models/$model.zip"
-        else;
+        else
             curl -o "models/$model.zip" "http://verbs.colorado.edu/~ribh9977/models/$model.zip"
         fi
         unzip "models/$model.zip" -d models
