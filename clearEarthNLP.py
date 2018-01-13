@@ -52,7 +52,7 @@ def runApplication():
             img_file = tempfile.NamedTemporaryFile(mode="wb", suffix=".png", delete=False)
             graph.write_png(img_file.name)
             lbox.nlpprocesses['parsing'][sid] = [img_file.name, nodes[1:-1]]
-        del parser
+        del parsermodel
         lbox.nlpprocesses['stash'] = True
     elif selectedTask == "tagging":
         if lbox.nlpprocesses['tagging']:return
