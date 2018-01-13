@@ -59,5 +59,65 @@ Download and unzip ClearEarthNLP.
 
 # Run
 
-    bash clearnlp.sh
+From inside the ClearEarthNLP directory, run:
 
+    ./clearnlp.sh
+
+The model files will automatically download and unzip into the "models/" directory the first time ClearEarthNLP is run. Expect this to take several minutes.
+
+Under "File" in the menu, you can select the text file to load.
+
+Select the NLP Tool you wish to run on the file and click "Run". This will load the model, which may take several minutes. After it is loaded, right-click on a sentence and select the relevant menu option to view the results.
+
+# NLP Terminology
+
+## POS
+
+ClearEarthNLP uses the Penn Treebank part of speech tags.
+
+| Tag  | Description | 
+| ------------- | ------------- |
+| CC | Coordinating conjunction |
+| CD | Cardinal number |
+| DT | Determiner |
+| EX | Existential there |
+| FW | Foreign word |
+| IN | Preposition or subordinating conjunction |
+| JJ | Adjective |
+| JJR | Adjective, comparative |
+| JJS | Adjective, superlative |
+| LS | List item marker |
+| MD | Modal |
+| NN | Noun, singular or mass |
+| NNS | Noun, plural |
+| NNP | Proper noun, singular |
+| NNPS | Proper noun, plural |
+| PDT | Predeterminer |
+| POS | Possessive ending |
+| PRP | Personal pronoun |
+| PRP$ | Possessive pronoun |
+| RB | Adverb |
+| RBR | Adverb, comparative |
+| RBS | Adverb, superlative |
+| RP | Particle |
+| SYM | Symbol |
+| TO | to |
+| UH | Interjection |
+| VB | Verb, base form |
+| VBD | Verb, past tense |
+| VBG | Verb, gerund or present participle |
+| VBN | Verb, past participle |
+| VBP | Verb, non-3rd person singular present |
+| VBZ | Verb, 3rd person singular present |
+| WDT | Wh-determiner |
+| WP | Wh-pronoun |
+| WP$ | Possessive wh-pronoun |
+| WRB | Wh-adverb |
+
+## NER
+
+ClearEarthNLP uses standard "BIO" NER tagging. Each named entity (such as "Biotic_Entity") is appended with "B" (**B**eginning of named entity) or "I" (**I**nside the entity). Tokens that are not an entity are **O**utside.
+
+## Dependency Parsing
+
+Dependency parse edges are labeled using [Universal Dependencies tags](http://universaldependencies.org/en/dep/).
