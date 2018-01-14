@@ -114,4 +114,59 @@ ClearEarthNLP uses standard "BIO" NER tagging. Each named entity (such as "Bioti
 
 ## Dependency Parsing
 
-Dependency parse edges are labeled using [Universal Dependencies tags](http://universaldependencies.org/en/dep/).
+Dependency parse edges are labeled using [Stanford Dependencies tags](https://nlp.stanford.edu/software/stanford-dependencies.shtml#English).
+
+| Label | Description |
+| ------------- | ------------- |
+| root | root |
+| dep | dependent |
+| aux | auxiliary |
+| auxpass | passive auxiliary |
+| cop | copula |
+| arg | argument |
+| agent | agent |
+| comp | complement |
+| acomp | adjectival complement |
+| ccomp | clausal complement with internal subject |
+| xcomp | clausal complement with external subject |
+| obj | object |
+| dobj | direct object |
+| iobj | indirect object |
+| pobj | object of preposition |
+| subj | subject |
+| nsubj | nominal subject |
+| nsubjpass | passive nominal subject |
+| csubj | clausal subject |
+| csubjpass | passive clausal subject |
+| cc | coordination |
+| conj | conjunct |
+| expl | expletive (expletive “there”) |
+| mod | modifier |
+| amod | adjectival modifier |
+| appos | appositional modifier |
+| advcl | adverbial clause modifier |
+| det | determiner |
+| predet | predeterminer |
+| preconj | preconjunct |
+| vmod | reduced, non|finite verbal modifier |
+| mwe | multi|word expression modifier |
+| mark | marker (word introducing an advcl or ccomp |
+| advmod | adverbial modifier |
+| neg | negation modifier |
+| rcmod | relative clause modifier |
+| quantmod | quantifier modifier |
+| nn | noun compound modifier |
+| npadvmod | noun phrase adverbial modifier |
+| tmod | temporal modifier |
+| num | numeric modifier |
+| number | element of compound number |
+| prep | prepositional modifier |
+| poss | possession modifier |
+| possessive | possessive modifier (’s) |
+| prt | phrasal verb particle |
+| parataxis | parataxis |
+| goeswith | goes with |
+| punct | punctuation |
+| ref | referent |
+| sdep | semantic dependent |
+| xsubj | controlling subject |
