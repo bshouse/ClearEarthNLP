@@ -39,7 +39,9 @@ def runApplication():
         if lbox.nlpprocesses['parsing']:return
         parsermodel = Parser(model='models/parser/clearnlp-parser')
         for sid, sentence in enumerate(lboxContent):
-            if not sentence.strip():continue
+            if not sentence.strip():
+                lbox.nlpprocesses['parsing'][sid] = list()
+                continue
             graph, ppos, Roott = parser.Test(parsermodel, sentence.strip().split())
             for node in xrange(len(graph)):
                 graph[node] = graph[node]._replace(tag=ppos[node],
@@ -63,7 +65,7 @@ def runApplication():
         else:
             tagger = Tagger(model='models/tagger/clearnlp-tagger')
             for sid, sentence in enumerate(lboxContent):
-                if not sentence.strip():continue
+                if not sentence.strip():lbox.nlpprocesses['tagging'][sid] = list()
                 tags =  tagger.tag_sent(sentence.split())
                 lbox.nlpprocesses['tagging'][sid] = list(tags)
             del tagger
@@ -72,7 +74,7 @@ def runApplication():
         if lbox.nlpprocesses['nentity']:return
         tagger = Tagger(model='models/ner/clearnlp-ner')
         for sid, sentence in enumerate(lboxContent):
-            if not sentence.strip():continue
+            if not sentence.strip():lbox.nlpprocesses['nentity'][sid] = list()
             tags =  tagger.tag_sent(sentence.split())
             lbox.nlpprocesses['nentity'][sid] = list(tags)
         del tagger
@@ -99,6 +101,7 @@ def contentReader(ifile):
     lbox.nlpprocesses = {'tagging'  : {},
                          'nentity'  : {},
                          'parsing'  : {},
+                         'sroles'   : {},
                          'ontorels' : {}}
 
     lbox.delete(0, END)
@@ -220,10 +223,11 @@ if __name__ == "__main__":
 
     label = ttk.Label(frame, text="NLP Tools:")
     
-    pos = ttk.Radiobutton(frame, text='POS Tagging', variable=system_outputs, value='tagging')
-    rev = ttk.Radiobutton(frame, text='NER Tagging', variable=system_outputs, value='nentity')
-    rel = ttk.Radiobutton(frame, text='Dependency Parsing', variable=system_outputs, value='parsing')
-    neg = ttk.Radiobutton(frame, text='Relation Extraction', variable=system_outputs, value='ontorels')
+    ptagging = ttk.Radiobutton(frame, text='POS Tagging', variable=system_outputs, value='tagging')
+    nentity = ttk.Radiobutton(frame, text='NER Tagging', variable=system_outputs, value='nentity')
+    dparsing = ttk.Radiobutton(frame, text='Dependency Parsing', variable=system_outputs, value='parsing')
+    semroles = ttk.Radiobutton(frame, text='Semantic Role Labelling', variable=system_outputs, value='sroles')
+    hhrelations = ttk.Radiobutton(frame, text='Relation Extraction', variable=system_outputs, value='ontorels')
     run = ttk.Button(frame, text='Run', command=runApplication, default='active')
     
     menubar=Menu(root)
@@ -243,13 +247,14 @@ if __name__ == "__main__":
     # Grid all the widgets
     lbox.grid(column=0, row=0, rowspan=7, sticky=(N,S,E,W))
     label.grid(column=3, row=0, padx=10, pady=5)
-    pos.grid(column=3, row=1, sticky=W, padx=20)
-    rev.grid(column=3, row=2, sticky=W, padx=20)
-    rel.grid(column=3, row=3, sticky=W, padx=20)
-    neg.grid(column=3, row=4, sticky=W, padx=20)
-    run.grid(column=3, row=5, sticky=(N,W), padx=20, pady=20)
+    ptagging.grid(column=3, row=1, sticky=W, padx=20)
+    nentity.grid(column=3, row=2, sticky=W, padx=20)
+    dparsing.grid(column=3, row=3, sticky=W, padx=20)
+    semroles.grid(column=3, row=4, sticky=W, padx=20)
+    hhrelations.grid(column=3, row=5, sticky=W, padx=20)
+    run.grid(column=3, row=6, sticky=(N,W), padx=20,pady=10)
     frame.grid_columnconfigure(0, weight=1)
-    frame.grid_rowconfigure(5, weight=1)
+    frame.grid_rowconfigure(6, weight=1)
     
     lbox.selection_set(0)
     ttk.Sizegrip(root).grid(column=999, row=999, sticky=(S,E))

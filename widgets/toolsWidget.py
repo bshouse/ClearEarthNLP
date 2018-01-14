@@ -13,15 +13,8 @@ class ToolsWidget(tkinter.Listbox):
     def __init__(self, parent, *args, **kwargs):
         tkinter.Listbox.__init__(self, parent, *args, **kwargs)
         self.popup_menu = tkinter.Menu(self, tearoff=0)
-        self.popup_menu.add_command(label="POS Sequence",
-                                    command=self.pos_tagger)
-        self.popup_menu.add_command(label="NER Sequence",
-                                    command=self.ner_tagger)
-        self.popup_menu.add_command(label="Parse Tree",
-                                    command=self.dep_parser)
-        self.popup_menu.add_command(label="Subsumption Pairs",
-                                    command=self.onto_extractor)
-        
+       
+        self.flags = {'tagging':False, 'ner':False, 'parsing':False, 'onto':False} 
         #NOTE event (left click, right click etc.) and function as arguments
         if sys.platform.startswith("linux"):
             self.bind("<Button-3>", self.popup)
@@ -29,10 +22,35 @@ class ToolsWidget(tkinter.Listbox):
             self.bind("<Button-2>", self.popup)
         self.bind_all("<FocusOut>", self.focusOut)
 
+    def add_popup_menu(self, task):
+        if self.flags[task]: return
+        if task == 'tagging':
+            self.popup_menu.add_command(label="POS Sequence",
+                                            command=self.pos_tagger)
+            self.flags[task] = True
+        elif task == 'ner':
+            
+            self.popup_menu.add_command(label="NER Sequence",
+                                        command=self.ner_tagger)
+            self.flags[task] = True
+        elif task == 'parsing':
+            self.popup_menu.add_command(label="Parse Tree",
+                                        command=self.dep_parser)
+            self.flags[task] = True
+        elif task == 'onto':
+            self.popup_menu.add_command(label="Subsumption Pairs",
+                                        command=self.onto_extractor)
+            self.flags[task] = True
+        else: return
+            
     def popup(self, event):
         #NOTE if no text/tool is loaded, don't popup
         if not self.curselection():return
         if self.nlpprocesses.get("stash", False) is False:return
+        if self.nlpprocesses['tagging']: self.add_popup_menu('tagging')
+        if self.nlpprocesses['nentity']: self.add_popup_menu('ner')
+        if self.nlpprocesses['parsing']: self.add_popup_menu('parsing')
+        if self.nlpprocesses['ontorels']: self.add_popup_menu('onto')
         try:
             #self.popup_menu.tk_popup(event.x_root, event.y_root, 0)
             self.popup_menu.post(event.x_root, event.y_root)
@@ -42,23 +60,17 @@ class ToolsWidget(tkinter.Listbox):
     def focusOut(self, event):
         self.popup_menu.unpost()
 
-    def pos_taggerSimple(self):
-        if not self.nlpprocesses['tagging']:return
-        sent_id = self.curselection()[0]
-        toplevel = Toplevel()
-        tagseq = Label(toplevel, text=self.nlpprocesses['tagging'][sent_id])
-        tagseq.pack(expand=1)
-
     def pos_tagger(self):
         if not self.nlpprocesses['tagging']:return
         sent_id = self.curselection()
         if not sent_id: return
         else: sent_id = sent_id[0]
+        word_tag_seq = self.nlpprocesses['tagging'][sent_id]
+        if not word_tag_seq: return
         toplevel = Toplevel()
         toplevel.focus_set()
         toplevel.grab_set() 
         toplevel.title("Part of Speech Tag Sequence")
-        word_tag_seq = self.nlpprocesses['tagging'][sent_id]
         words = [w[0] for w in word_tag_seq]
         tags = [w[1] for w in word_tag_seq]
         maxstrings = [word if len(word) >= len(tag) else tag for (word, tag) in word_tag_seq]
@@ -86,11 +98,12 @@ class ToolsWidget(tkinter.Listbox):
         sent_id = self.curselection()
         if not sent_id: return
         else: sent_id = sent_id[0]
+        word_tag_seq = self.nlpprocesses['nentity'][sent_id]
+        if not word_tag_seq: return
         toplevel = Toplevel()
         toplevel.focus_set()
         toplevel.grab_set() 
         toplevel.title("Named-entity Tag Sequence")
-        word_tag_seq = self.nlpprocesses['nentity'][sent_id]
         words = [w[0] for w in word_tag_seq]
         tags = [w[1] for w in word_tag_seq]
         maxstrings = [word if len(word) >= len(tag) else tag for (word, tag) in word_tag_seq]
@@ -118,11 +131,13 @@ class ToolsWidget(tkinter.Listbox):
         sent_id = self.curselection()
         if not sent_id: return
         else: sent_id = sent_id[0]
+        dtree = self.nlpprocesses['parsing'][sent_id]
+        if not dtree: return
         root = Toplevel()
         root.focus_set()
         root.grab_set() 
         root.title("Dependency Tree")
-        treeLoader = Image.open(self.nlpprocesses['parsing'][sent_id][0])
+        treeLoader = Image.open(dtree[0])
         parseTree = ImageTk.PhotoImage(treeLoader.convert("RGB"))
         canvas = tkinter.Canvas(root, borderwidth=0, 
                                       background="#ffffff", 
