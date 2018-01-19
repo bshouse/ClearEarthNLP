@@ -61,7 +61,7 @@ The model files will automatically download and unzip into the "models/" directo
 
 Under "File" in the menu, you can select the text file to load.
 
-Select the NLP Tool you wish to run on the file and click "Run". This will load the model, which may take several minutes. After it is loaded, right-click on a sentence and select the relevant menu option to view the results.
+Select the NLP Tool you wish to run on the file and click "Run". This will load the model, which will likely take several minutes. The tool will not indicate progress, other than to be non-responsive until it's done. After it is loaded, right-click on a sentence and select the relevant menu option to view the results.
 
 # NLP Terminology
 
