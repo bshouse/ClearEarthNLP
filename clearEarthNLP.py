@@ -14,7 +14,7 @@ from functools import partial
 from tkinter import ttk, font, filedialog
 from tkinter.messagebox import showinfo, askokcancel, askyesno
 
-from irtokz import RomanTokenizer
+from indic_tokenizer import Tokenizer
 
 from utils import plotTree
 from widgets.toolsWidget import ToolsWidget
@@ -177,7 +177,7 @@ def Quit():
         root.quit()
 
 if __name__ == "__main__":
-    tok = RomanTokenizer(split_sen=True)
+    tok = Tokenizer(lang='eng', split_sen=True)
     root = Tk()
     style = ttk.Style()
     root.wm_title("Clear Earth NLP Toolkit")
